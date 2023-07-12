@@ -115,24 +115,43 @@ const engageEnemy = () => {
       newOpponent.attack(playerShip);
       if (playerShip.hull > 0){
         playerChoice()
+      } else {
+        console.log(`Our ship is about to explode. We have prepared the escape pod. We must abandon ship!!`);
+        alert(`Our ship is about to explode. We have prepared the escape pod. We must abandon ship!!`);
       }
     }
-  };
+};
 
 // function for showing prompts for player
 const playerChoice = () => {
+  if (foreignShips.length > 0) {
   console.log(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ships left`);
-  alert(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ships left`);
+  alert(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ship(s) left`);
   let myChoice = prompt('Captain, should we attack or retreat?');
   if (myChoice === 'attack') {
     engageEnemy();
   } else if (myChoice === 'retreat') {
     playerShip.retreat();
+  } else {
+    alert('Comms signal interference. Say again?');
+    playerChoice();
+  }
+ } else {
+  console.log(`We eradicated all enemies. Time to celebrate. Returning to base.`);
+  alert(`We eradicated all enemies. Time to celebrate. Returning to base.`);
+  let newGame = prompt('New Game! Yes or No?');
+  if (newGame == 'yes') {
+   theGame();
+   } else {
+   alert(`Fine, I didn't want to play anyways.`);
+    }  
   }
 }
 
 // game object
 const theGame = () => {
+  // resets player ship values on new game
+  playerShip = new humanShip ('USS Assembly', 20, 5, 0.7)
   newEnemies();
   newOpponent = foreignShips.shift();
   console.log('You must defend Earth from the alien intruders.');
@@ -141,4 +160,4 @@ const theGame = () => {
 }
 
 
-theGame()
+// theGame()
