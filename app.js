@@ -53,9 +53,11 @@ class humanShip extends Ship {
 // alien spaceship subclass
 // let alienShip = new Ship ('Bad Boy', randomWholeNumber(3, 6),randomWholeNumber(2, 4), randomDecimalNumber(0.6, 0.8))
 
-class alienShip extends Ship {
-  constructor (name, hull, firepower, accuracy) {
-    super (name, hull, firepower, accuracy)
+class alienShip {
+  constructor (hull, firepower, accuracy) {
+     this.hull = hull;
+     this.firepower = firepower;
+     this.accuracy = accuracy;
   } 
   // create attack method
   attack(player) {
@@ -84,7 +86,32 @@ let playerShip = new humanShip ('USS Assembly', 20, 5, 0.7)
 
 // make instance of alien class
 
-let foreignShip = new alienShip ('Bad Boy', randomWholeNumber(3, 6),randomWholeNumber(2, 4), randomDecimalNumber(0.6, 0.8))
+// let foreignShip = new alienShip ('Bad Boy', randomWholeNumber(3, 6),randomWholeNumber(2, 4), randomDecimalNumber(0.6, 0.8))
 
 // playerShip.attack(foreignShip)
 // foreignShip.attack(playerShip)
+
+// create empty array to manipulate multiple enemy ships
+let foreignShips = [];
+
+// loop to randomly instantiate enemy ships
+const newEnemies = () => {
+  for(let i = 0; i <= 6; i++){
+    let hull = randomWholeNumber(3, 6);
+    let firepower = randomWholeNumber(2, 4);
+    let accuracy = randomDecimalNumber(0.6, 0.8);
+    let enemy = new alienShip(hull, firepower, accuracy);
+    foreignShips.push(enemy);
+  }
+}
+
+// game object
+const theGame = () => {
+  newEnemies();
+  newOpponent = foreignShips.shift();
+  alert('You must defend Earth from the alien intruders.');
+  console.log(newOpponent);
+  console.log(foreignShips);
+}
+
+theGame()
