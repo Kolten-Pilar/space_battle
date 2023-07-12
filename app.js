@@ -105,13 +105,31 @@ const newEnemies = () => {
   }
 }
 
+// make function for engaging enemy ship
+const engageEnemy = () => {
+    playerShip.attack(newOpponent);
+    if (newOpponent.hull <= 0 && foreignShips.length > 0) {
+      newOpponent = foreignShips.shift()
+    }
+  };
+
+
+
 // game object
 const theGame = () => {
   newEnemies();
   newOpponent = foreignShips.shift();
+  console.log('You must defend Earth from the alien intruders.');
   alert('You must defend Earth from the alien intruders.');
-  console.log(newOpponent);
-  console.log(foreignShips);
+  console.log(`Enemy approaching.`);
+  alert(`Enemy approaching.`);
+  let myChoice = prompt('Captain, should we attack or retreat?');
+  if (myChoice === 'attack') {
+    engageEnemy()
+  } else if (myChoice === 'retreat') {
+    playerShip.retreat();
+  }
 }
+
 
 theGame()
