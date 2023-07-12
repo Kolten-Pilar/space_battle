@@ -21,17 +21,19 @@ const randomDecimalNumber = (min, max) => {
 }
 
 // human spaceship subclass
-// let playerShip = new Ship ('USS Assembly', 20, 5, 0.7)
 class humanShip extends Ship {
   constructor (name, hull, firepower, accuracy) {
     super(name, hull, firepower, accuracy)
   }  
   // create attack method
   attack(target) {
+    // if player's accuracy is greater than the random number, the attack registers
     if (Math.random() < this.accuracy) {
       console.log('We damaged the enemy!');
       alert(`We damaged the enemy!`);
+      // reduces targets hull points by the players firepower
       target.hull -= this.firepower;
+      // checks enemy's hull points and shows appropriate message
       if (target.hull <= 0) {
         console.log('We got them! Enemy ship has been destroyed');
         alert('We got them! Enemy ship has been destroyed');
@@ -59,7 +61,7 @@ class alienShip {
      this.firepower = firepower;
      this.accuracy = accuracy;
   } 
-  // create attack method
+  // create attack method, same as player's method but adjusted alerts
   attack(player) {
     if (Math.random() < this.accuracy) {
       console.log('You have been hit!');
@@ -84,13 +86,6 @@ class alienShip {
 
 let playerShip = new humanShip ('USS Assembly', 20, 5, 0.7)
 
-// make instance of alien class
-
-// let foreignShip = new alienShip ('Bad Boy', randomWholeNumber(3, 6),randomWholeNumber(2, 4), randomDecimalNumber(0.6, 0.8))
-
-// playerShip.attack(foreignShip)
-// foreignShip.attack(playerShip)
-
 // create empty array to manipulate multiple enemy ships
 let foreignShips = [];
 
@@ -101,6 +96,7 @@ const newEnemies = () => {
     let firepower = randomWholeNumber(2, 4);
     let accuracy = randomDecimalNumber(0.6, 0.8);
     let enemy = new alienShip(hull, firepower, accuracy);
+    // pushes newly created enemy ship into foreignShips array
     foreignShips.push(enemy);
   }
 }
@@ -109,6 +105,7 @@ const newEnemies = () => {
 const engageEnemy = () => {
     playerShip.attack(newOpponent);
     if (newOpponent.hull <= 0 && foreignShips.length > 0) {
+      // removes the first created foreignShip index and returns it into newOpponent variable and then prompts player
       newOpponent = foreignShips.shift();
       playerChoice();
     } else if (newOpponent.hull > 0) {
@@ -124,15 +121,18 @@ const engageEnemy = () => {
 
 // function for showing prompts for player
 const playerChoice = () => {
+  // game checks for enemy ships remaining. If enemy ships remain, game continues
   if (foreignShips.length > 0) {
-  console.log(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ships left`);
-  alert(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ship(s) left`);
+  console.log(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ships left. Our stats are: Hull-${playerShip.hull}, firepower-${playerShip.firepower}, accuracy-${playerShip.accuracy}`);
+  alert(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ship(s) left. Our stats are: Hull-${playerShip.hull}, firepower-${playerShip.firepower}, accuracy-${playerShip.accuracy}`);
+  // prompts in alert window for player to attack or retreat
   let myChoice = prompt('Captain, should we attack or retreat?');
   if (myChoice === 'attack') {
     engageEnemy();
   } else if (myChoice === 'retreat') {
     playerShip.retreat();
   } else {
+    // if player enters an invalid prompt
     alert('Comms signal interference. Say again?');
     playerChoice();
   }
@@ -148,16 +148,13 @@ const playerChoice = () => {
   }
 }
 
-// game object
+// game object, starts the game when player presses button
 const theGame = () => {
   // resets player ship values on new game
-  playerShip = new humanShip ('USS Assembly', 20, 5, 0.7)
+  playerShip = new humanShip ('USS Assembly', 20, 5, 0.7);
   newEnemies();
   newOpponent = foreignShips.shift();
   console.log('You must defend Earth from the alien intruders.');
   alert('You must defend Earth from the alien intruders.');
   playerChoice();
 }
-
-
-// theGame()
