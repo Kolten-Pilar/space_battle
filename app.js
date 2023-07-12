@@ -30,18 +30,23 @@ class humanShip extends Ship {
   attack(target) {
     if (Math.random() < this.accuracy) {
       console.log('We damaged the enemy!');
+      alert(`We damaged the enemy!`);
       target.hull -= this.firepower;
       if (target.hull <= 0) {
         console.log('We got them! Enemy ship has been destroyed');
+        alert('We got them! Enemy ship has been destroyed');
       } else {
         console.log(`Hit! The enemy ship has ${target.hull} hull integrity remaining`);
+        alert(`Hit! The enemy ship has ${target.hull} hull integrity remaining`);
       }
     } else {
-      console.log('You missed!');
+      console.log('Your attack missed!');
+      alert('Your attack missed!');
     }
   }
   retreat() {
-    console.log(`You have survived the battle and retreated, but at what cost?`);
+    console.log(`You have survived the battle and retreated, but at what cost? AT WHAT COST???`);
+    alert(`You have survived the battle and retreated, but at what cost? AT WHAT COST???`);
   }
 }
 
@@ -56,14 +61,18 @@ class alienShip extends Ship {
   attack(player) {
     if (Math.random() < this.accuracy) {
       console.log('You have been hit!');
+      alert('You have been hit!');
       player.hull -= this.firepower;
       if (player.hull <= 0) {
         console.log('We are done for. The ship is destroyed!');
+        alert('We are done for. The ship is destroyed!');
       } else {
-        console.log(`Damaged received! The our ship has ${player.hull} hull integrity remaining`);
+        console.log(`Damaged received! Our ship has ${player.hull} hull integrity remaining`);
+        alert(`Damaged received! Our ship has ${player.hull} hull integrity remaining`);
       }
     } else {
       console.log('They missed!');
+      alert('They missed!');
     }
   }
 }
