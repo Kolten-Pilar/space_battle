@@ -109,11 +109,27 @@ const newEnemies = () => {
 const engageEnemy = () => {
     playerShip.attack(newOpponent);
     if (newOpponent.hull <= 0 && foreignShips.length > 0) {
-      newOpponent = foreignShips.shift()
+      newOpponent = foreignShips.shift();
+      playerChoice();
+    } else if (newOpponent.hull > 0) {
+      newOpponent.attack(playerShip);
+      if (playerShip.hull > 0){
+        playerChoice()
+      }
     }
   };
 
-
+// function for showing prompts for player
+const playerChoice = () => {
+  console.log(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ships left`);
+  alert(`An enemy is engaging. Their stats are: Hull-${newOpponent.hull}, firepower-${newOpponent.firepower}, accuracy-${newOpponent.accuracy}. There are ${foreignShips.length} ships left`);
+  let myChoice = prompt('Captain, should we attack or retreat?');
+  if (myChoice === 'attack') {
+    engageEnemy();
+  } else if (myChoice === 'retreat') {
+    playerShip.retreat();
+  }
+}
 
 // game object
 const theGame = () => {
@@ -121,14 +137,7 @@ const theGame = () => {
   newOpponent = foreignShips.shift();
   console.log('You must defend Earth from the alien intruders.');
   alert('You must defend Earth from the alien intruders.');
-  console.log(`Enemy approaching.`);
-  alert(`Enemy approaching.`);
-  let myChoice = prompt('Captain, should we attack or retreat?');
-  if (myChoice === 'attack') {
-    engageEnemy()
-  } else if (myChoice === 'retreat') {
-    playerShip.retreat();
-  }
+  playerChoice();
 }
 
 
