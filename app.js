@@ -77,5 +77,5 @@ let playerShip = new humanShip ('USS Assembly', 20, 5, 0.7)
 
 let foreignShip = new alienShip ('Bad Boy', randomWholeNumber(3, 6),randomWholeNumber(2, 4), randomDecimalNumber(0.6, 0.8))
 
-playerShip.attack(foreignShip)
-foreignShip.attack(playerShip)
+// playerShip.attack(foreignShip)
+// foreignShip.attack(playerShip)
